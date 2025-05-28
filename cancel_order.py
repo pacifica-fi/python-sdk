@@ -12,29 +12,29 @@ PRIVATE_KEY = ""
 
 
 def main():
-    # Generate account based on private key.
+    # Generate account based on private key
     keypair = Keypair.from_bytes(base58.b58decode(PRIVATE_KEY))
     public_key = str(keypair.pubkey())
 
-    # Scaffold the signature header.
-    timestamp = int(time.time() * 1000)
+    # Scaffold the signature header
+    timestamp = int(time.time() * 1_000)
 
     signature_header = {
         "timestamp": timestamp,
-        "expiry_window": 5000,
+        "expiry_window": 5_000,
         "type": "cancel_order",
     }
 
-    # Construct the signature payload.
+    # Construct the signature payload
     signature_payload = {
         "symbol": "BTC",
         "order_id": 42069,  # or "client_order_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     }
 
-    # Use the helper function to sign the message.
+    # Use the helper function to sign the message
     message, signature = sign_message(signature_header, signature_payload, keypair)
 
-    # Construct the request reusing the payload and constructing common request fields.
+    # Construct the request reusing the payload and constructing common request fields
     request_header = {
         "account": public_key,
         "agent_wallet": None,
