@@ -6,7 +6,7 @@
 pip3 install -r requirements.txt
 ```
 
-## Usage
+## Examples
 
 ```bash
 python3 create_order.py
