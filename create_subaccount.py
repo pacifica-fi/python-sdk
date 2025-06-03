@@ -59,7 +59,7 @@ from solders.keypair import Keypair
 
 from utils import sign_message
 
-API_URL = "http://api.pacifica.fi/api/v1/account/subaccount/create"
+API_URL = "https://api.pacifica.fi/api/v1/account/subaccount/create"
 MAIN_PRIVATE_KEY = ""
 SUB_PRIVATE_KEY = ""
 
