@@ -1,7 +1,6 @@
 import time
 import uuid
 
-import base58
 import requests
 from solders.keypair import Keypair
 
@@ -14,7 +13,7 @@ PRIVATE_KEY = ""
 
 def main():
     # Generate account based on private key
-    keypair = Keypair.from_bytes(base58.b58decode(PRIVATE_KEY))
+    keypair = Keypair.from_base58_string(PRIVATE_KEY)
     public_key = str(keypair.pubkey())
 
     # Scaffold the signature header
