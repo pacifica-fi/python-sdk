@@ -55,7 +55,7 @@ async def exec_main():
     }
 
     # Connect to WebSocket
-    async with websockets.connect(WS_URL) as websocket:
+    async with websockets.connect(WS_URL, ping_interval=30) as websocket:
         # Prepare the WebSocket message according to the backend format
         ws_message = {
             "id": str(uuid.uuid4()),
