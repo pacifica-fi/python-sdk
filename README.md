@@ -23,7 +23,7 @@ python3 -m rest.create_order
 
 The folder `ws` contains examples of using the Websocket API. To run an example:
 
-1. Modify the `PRIVATE_KEY` in the desired example file (e.g., `websocket/create_order.py`)
+1. Modify the `PRIVATE_KEY` in the desired example file (e.g., `ws/create_order.py`)
 2. Run the example using Python's module execution mode:
 
 ```bash
