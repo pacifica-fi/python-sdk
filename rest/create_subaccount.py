@@ -57,9 +57,10 @@ import time
 import requests
 from solders.keypair import Keypair
 
-from utils import sign_message
+from common.constants import REST_URL
+from common.utils import sign_message
 
-API_URL = "https://api.pacifica.fi/api/v1/account/subaccount/create"
+API_URL = f"{REST_URL}/account/subaccount/create"
 MAIN_PRIVATE_KEY = ""
 SUB_PRIVATE_KEY = ""
 

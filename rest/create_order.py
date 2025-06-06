@@ -1,20 +1,21 @@
 import time
+import uuid
 
 import requests
 from solders.keypair import Keypair
 
-from utils import sign_message
+from common.constants import REST_URL
+from common.utils import sign_message
 
 
-API_URL = "https://api.pacifica.fi/api/v1/account/subaccount/transfer"
-FROM_PRIVATE_KEY = ""  # must be a main account or a subaccount
-TO_PUBLIC_KEY = ""  # must be the above's child subaccount or parent main account
+API_URL = f"{REST_URL}/orders/create"
+PRIVATE_KEY = ""
 
 
 def main():
     # Generate account based on private key
-    from_keypair = Keypair.from_base58_string(FROM_PRIVATE_KEY)
-    from_public_key = str(from_keypair.pubkey())
+    keypair = Keypair.from_base58_string(PRIVATE_KEY)
+    public_key = str(keypair.pubkey())
 
     # Scaffold the signature header
     timestamp = int(time.time() * 1_000)
@@ -22,21 +23,26 @@ def main():
     signature_header = {
         "timestamp": timestamp,
         "expiry_window": 5_000,
-        "type": "transfer_funds",
+        "type": "create_order",
     }
 
     # Construct the signature payload
     signature_payload = {
-        "to_account": TO_PUBLIC_KEY,
-        "amount": "420.69",
+        "symbol": "BTC",
+        "price": str(100_000),
+        "reduce_only": False,
+        "amount": "0.1",
+        "side": "bid",
+        "tif": "GTC",
+        "client_order_id": str(uuid.uuid4()),
     }
 
     # Use the helper function to sign the message
-    message, signature = sign_message(signature_header, signature_payload, from_keypair)
+    message, signature = sign_message(signature_header, signature_payload, keypair)
 
     # Construct the request reusing the payload and constructing common request fields
     request_header = {
-        "account": from_public_key,
+        "account": public_key,
         "agent_wallet": None,
         "signature": signature,
         "timestamp": signature_header["timestamp"],
@@ -58,8 +64,7 @@ def main():
 
     # Print details for debugging
     print("\nDebug Info:")
-    print(f"From Account: {from_public_key}")
-    print(f"To Account: {TO_PUBLIC_KEY}")
+    print(f"Address: {public_key}")
     print(f"Message: {message}")
     print(f"Signature: {signature}")
 
