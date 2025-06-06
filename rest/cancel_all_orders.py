@@ -3,10 +3,10 @@ import time
 import requests
 from solders.keypair import Keypair
 
-from utils import sign_message
+from common.constants import REST_URL
+from common.utils import sign_message
 
-
-API_URL = "https://api.pacifica.fi/api/v1/orders/cancel"
+API_URL = f"{REST_URL}/orders/cancel_all"
 PRIVATE_KEY = ""
 
 
@@ -21,13 +21,13 @@ def main():
     signature_header = {
         "timestamp": timestamp,
         "expiry_window": 5_000,
-        "type": "cancel_order",
+        "type": "cancel_all_orders",
     }
 
     # Construct the signature payload
     signature_payload = {
-        "symbol": "BTC",
-        "order_id": 42069,  # or "client_order_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        "all_symbols": True,
+        "exclude_reduce_only": False,
     }
 
     # Use the helper function to sign the message
