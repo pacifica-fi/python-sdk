@@ -37,7 +37,6 @@ def main():
     # Construct the request reusing the payload and constructing common request fields
     request_header = {
         "account": public_key,
-        "agent_wallet": None,
         "signature": signature,
         "timestamp": signature_header["timestamp"],
         "expiry_window": signature_header["expiry_window"],
