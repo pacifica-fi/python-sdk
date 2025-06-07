@@ -5,7 +5,7 @@ import requests
 from solders.keypair import Keypair
 
 from common.constants import REST_URL
-from common.utils import sort_json_keys, sign_with_hardware_wallet
+from common.utils import sign_with_hardware_wallet
 
 
 API_URL = f"{REST_URL}/account/subaccount/transfer"
@@ -30,16 +30,10 @@ def main():
         "amount": "420.69",
     }
 
-    data = {
-        **signature_header,
-        "data": signature_payload,
-    }
-
-    message = sort_json_keys(data)
-    message_bytes = json.dumps(message, separators=(",", ":")).encode("utf-8")
-
     print("Signing with hardware wallet...")
-    signature = sign_with_hardware_wallet(message_bytes, HARDWARE_PATH)
+    message, signature = sign_with_hardware_wallet(
+        signature_header, signature_payload, HARDWARE_PATH
+    )
 
     # Construct the request reusing the payload and constructing common request fields
     request_header = {

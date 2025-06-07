@@ -5,7 +5,7 @@ import requests
 from solders.keypair import Keypair
 
 from common.constants import REST_URL
-from common.utils import sign_message, sort_json_keys, sign_with_hardware_wallet
+from common.utils import sign_message, sign_with_hardware_wallet
 
 API_URL = f"{REST_URL}/account/subaccount/create"
 MAIN_HARDWARE_PUB_KEY = ""
@@ -48,19 +48,10 @@ def main():
 
     payload = {"signature": subaccount_signature}
 
-    data = {
-        **main_account_signature_header,
-        "data": payload,
-    }
-
-    # Sort the JSON keys and convert to bytes (reusing the same logic as sign_message)
-    main_account_message = sort_json_keys(data)
-    message_bytes = json.dumps(main_account_message, separators=(",", ":")).encode(
-        "utf-8"
-    )
-
     print("Signing with hardware wallet...")
-    main_signature = sign_with_hardware_wallet(message_bytes, MAIN_HARDWARE_PATH)
+    main_account_message, main_signature = sign_with_hardware_wallet(
+        main_account_signature_header, payload, MAIN_HARDWARE_PATH
+    )
 
     # Step 3: Create and send the request
     request = {
