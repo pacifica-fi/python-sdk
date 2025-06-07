@@ -21,7 +21,7 @@ def main():
     # Generate a timestamp and expiry window
     # Both signatures must have the same timestamp and expiry window.
     timestamp = int(time.time() * 1_000)
-    expiry_window = 5_000
+    expiry_window = 200_000
 
     # Get public keys
     sub_public_key = str(sub_keypair.pubkey())
@@ -59,6 +59,7 @@ def main():
         "utf-8"
     )
 
+    print("Signing with hardware wallet...")
     main_signature = sign_with_hardware_wallet(message_bytes, MAIN_HARDWARE_PATH)
 
     # Step 3: Create and send the request
@@ -66,7 +67,7 @@ def main():
         "main_account": MAIN_HARDWARE_PUB_KEY,
         "subaccount": sub_public_key,
         "main_signature": {
-            "type": "hardware_wallet",
+            "type": "hardware",
             "value": main_signature,
         },
         "sub_signature": subaccount_signature,
