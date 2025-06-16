@@ -4,14 +4,14 @@ import subprocess
 
 
 def sign_message(header, payload, keypair):
-    message, message_string = prepare_message(header, payload)
-    message_bytes = message_string.encode("utf-8")
+    message = prepare_message(header, payload)
+    message_bytes = message.encode("utf-8")
     signature = keypair.sign_message(message_bytes)
     return (message, base58.b58encode(bytes(signature)).decode("ascii"))
 
 
 def sign_with_hardware_wallet(header, payload, hardware_wallet_path):
-    message, message_string = prepare_message(header, payload)
+    message = prepare_message(header, payload)
 
     # Construct the solana CLI command
     cmd = [
@@ -19,7 +19,7 @@ def sign_with_hardware_wallet(header, payload, hardware_wallet_path):
         "sign-offchain-message",
         "-k",
         hardware_wallet_path,
-        message_string,
+        message,
     ]
 
     try:
@@ -56,9 +56,9 @@ def prepare_message(header, payload):
     message = sort_json_keys(data)
 
     # Specifying the separaters is important because the JSON message is expected to be compact.
-    message_string = json.dumps(message, separators=(",", ":"))
+    message = json.dumps(message, separators=(",", ":"))
 
-    return message, message_string
+    return message
 
 
 def sort_json_keys(value):
