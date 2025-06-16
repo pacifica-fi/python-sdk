@@ -4,20 +4,27 @@ import subprocess
 
 
 def sign_message(header, payload, keypair):
-    message, message_bytes = prepare_message(header, payload)
+    message, message_string = prepare_message(header, payload)
+    message_bytes = message_string.encode("utf-8")
     signature = keypair.sign_message(message_bytes)
     return (message, base58.b58encode(bytes(signature)).decode("ascii"))
 
 
 def sign_with_hardware_wallet(header, payload, hardware_wallet_path):
-    message, message_bytes = prepare_message(header, payload)
+    message, message_string = prepare_message(header, payload)
 
     # Construct the solana CLI command
-    cmd = f"solana sign-offchain-message -k {hardware_wallet_path} {message_bytes}"
+    cmd = [
+        "solana",
+        "sign-offchain-message",
+        "-k",
+        hardware_wallet_path,
+        message_string,
+    ]
 
     try:
         # Execute the command and get the signature
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        result = subprocess.run(cmd, capture_output=True, text=True, shell=False)
         if result.returncode != 0:
             raise Exception(f"Ledger signing failed: {result.stderr}")
 
@@ -49,9 +56,9 @@ def prepare_message(header, payload):
     message = sort_json_keys(data)
 
     # Specifying the separaters is important because the JSON message is expected to be compact.
-    message_bytes = json.dumps(message, separators=(",", ":")).encode("utf-8")
+    message_string = json.dumps(message, separators=(",", ":"))
 
-    return message, message_bytes
+    return message, message_string
 
 
 def sort_json_keys(value):
