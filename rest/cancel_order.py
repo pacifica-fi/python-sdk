@@ -8,7 +8,7 @@ from common.utils import sign_message
 
 
 API_URL = f"{REST_URL}/orders/cancel"
-PRIVATE_KEY = ""
+PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
 
 
 def main():
