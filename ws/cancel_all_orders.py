@@ -9,7 +9,7 @@ from solders.keypair import Keypair
 from common.constants import WS_URL
 from common.utils import sign_message
 
-PRIVATE_KEY = ""
+PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
 
 
 async def exec_main():
