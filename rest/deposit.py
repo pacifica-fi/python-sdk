@@ -1,5 +1,3 @@
-# Save as deposit.py
-
 from borsh_construct import CStruct, U64
 from solders.keypair import Keypair
 from solders.instruction import Instruction, AccountMeta
@@ -54,7 +52,7 @@ def main():
     user_usdc_ata = get_associated_token_address(keypair.pubkey(), USDC_MINT)
     event_authority, _ = Pubkey.find_program_address([b"__event_authority"], PROGRAM_ID)
 
-    # Prepare accounts (order matters!)
+    # Prepare accounts
     keys = [
         AccountMeta(
             pubkey=keypair.pubkey(), is_signer=True, is_writable=True
