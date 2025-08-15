@@ -8,7 +8,7 @@ from spl.token.constants import TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID
 import hashlib
 
 PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
-DEPOSIT_AMOUNT = 4200.69
+DEPOSIT_AMOUNT = 4200.69  # minimum amount is 10
 
 PROGRAM_ID = Pubkey.from_string("PCFA5iYgmqK6MqPhWNKg7Yv7auX7VZ4Cx7T1eJyrAMH")
 CENTRAL_STATE = Pubkey.from_string("9Gdmhq4Gv1LnNMp7aiS1HSVd7pNnXNMsbuXALCQRmGjY")
