@@ -1,3 +1,9 @@
+"""
+This example shows how to create, revoke, and list api config keys for an account.
+Please refer to https://docs.pacifica.fi/api-documentation/api/rate-limits/api-config-keys#using-a-pacifica-api-config-key
+for the use of API Config Keys.
+"""
+
 import time
 import json
 
@@ -15,7 +21,7 @@ LIST_ENDPOINT = f"{REST_URL}/account/api_keys"
 PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
 
 
-def create_api_key(keypair: Keypair):
+def create_api_config_key(keypair: Keypair):
     public_key = str(keypair.pubkey())
 
     # Scaffold the signature header
@@ -56,7 +62,7 @@ def create_api_key(keypair: Keypair):
     return response
 
 
-def revoke_api_key(keypair: Keypair, api_key: str):
+def revoke_api_config_key(keypair: Keypair, api_key: str):
     public_key = str(keypair.pubkey())
 
     # Scaffold the signature header
@@ -99,7 +105,7 @@ def revoke_api_key(keypair: Keypair, api_key: str):
     return response
 
 
-def list_api_keys(keypair: Keypair):
+def list_api_config_keys(keypair: Keypair):
     public_key = str(keypair.pubkey())
 
     # Scaffold the signature header
@@ -144,22 +150,22 @@ def main():
     # Generate account based on private key
     keypair = Keypair.from_base58_string(PRIVATE_KEY)
 
-    print("Creating API key")
-    response = create_api_key(keypair)
+    print("Creating API Config Key")
+    response = create_api_config_key(keypair)
     print(json.dumps(response.json(), indent=4))
 
     api_key = response.json()["data"]["api_key"]
 
-    print("Listing API keys")
-    response = list_api_keys(keypair)
+    print("Listing API Config Keys")
+    response = list_api_config_keys(keypair)
     print(json.dumps(response.json(), indent=4))
 
-    print(f"Revoking API key {api_key}")
-    response = revoke_api_key(keypair, api_key)
+    print(f"Revoking API Config Key {api_key}")
+    response = revoke_api_config_key(keypair, api_key)
     print(json.dumps(response.json(), indent=4))
 
-    print("Listing API keys")
-    response = list_api_keys(keypair)
+    print("Listing API Keys")
+    response = list_api_config_keys(keypair)
     print(json.dumps(response.json(), indent=4))
 
 
