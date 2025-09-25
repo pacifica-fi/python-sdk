@@ -1,3 +1,9 @@
+"""
+This example shows how to bind an api agent key (also called agent wallet)
+to an account and use the api agent key to sign on behalf of the account
+to create a market order.
+"""
+
 import time
 import uuid
 
