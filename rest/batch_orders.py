@@ -1,15 +1,19 @@
+import os
 import time
 import uuid
 
 import requests
+from dotenv import load_dotenv
 from solders.keypair import Keypair
 
 from common.constants import REST_URL
 from common.utils import sign_message
 
+# Load environment variables
+load_dotenv()
 
 API_URL = f"{REST_URL}/orders/batch"
-PRIVATE_KEY = ""
+PRIVATE_KEY = os.getenv("PRIVATE_KEY")
 
 
 def main():
