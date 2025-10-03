@@ -52,17 +52,22 @@ The authentication flow uses a cross-signature scheme to ensure that both the ma
    - If both verifications succeed, the subaccount relationship is established
 """
 
+import os
 import time
 
 import requests
+from dotenv import load_dotenv
 from solders.keypair import Keypair
 
 from common.constants import REST_URL
 from common.utils import sign_message
 
+# Load environment variables
+load_dotenv()
+
 API_URL = f"{REST_URL}/account/subaccount/create"
-MAIN_PRIVATE_KEY = ""
-SUB_PRIVATE_KEY = ""
+MAIN_PRIVATE_KEY = os.getenv("MAIN_PRIVATE_KEY")
+SUB_PRIVATE_KEY = os.getenv("SUB_PRIVATE_KEY")
 
 
 def main():

@@ -1,16 +1,21 @@
+import os
 import time
 import json
 
 import requests
+from dotenv import load_dotenv
 from solders.keypair import Keypair
 
 from common.constants import REST_URL
 from common.utils import sign_message, sign_with_hardware_wallet
 
+# Load environment variables
+load_dotenv()
+
 API_URL = f"{REST_URL}/account/subaccount/create"
-MAIN_HARDWARE_PUB_KEY = ""
-MAIN_HARDWARE_PATH = ""  # e.g. "usb://ledger?key=1"
-SUB_PRIVATE_KEY = ""
+MAIN_HARDWARE_PUB_KEY = os.getenv("MAIN_HARDWARE_PUB_KEY")
+MAIN_HARDWARE_PATH = os.getenv("MAIN_HARDWARE_PATH")  # e.g. "usb://ledger?key=1"
+SUB_PRIVATE_KEY = os.getenv("SUB_PRIVATE_KEY")
 
 
 def main():

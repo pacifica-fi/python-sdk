@@ -1,14 +1,18 @@
+import os
 import time
 
 import requests
+from dotenv import load_dotenv
 from solders.keypair import Keypair
 
 from common.constants import REST_URL
 from common.utils import sign_message
 
+# Load environment variables
+load_dotenv()
 
 API_URL = f"{REST_URL}/orders/cancel"
-PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
+PRIVATE_KEY = os.getenv("PRIVATE_KEY")
 
 
 def main():

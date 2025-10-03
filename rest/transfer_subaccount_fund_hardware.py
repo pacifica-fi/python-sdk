@@ -1,17 +1,21 @@
+import os
 import time
 import json
 
 import requests
+from dotenv import load_dotenv
 from solders.keypair import Keypair
 
 from common.constants import REST_URL
 from common.utils import sign_with_hardware_wallet
 
+# Load environment variables
+load_dotenv()
 
 API_URL = f"{REST_URL}/account/subaccount/transfer"
-HARDWARE_PATH = ""  # e.g. "usb://ledger?key=1"
-FROM_HARDWARE_PUB_KEY = ""  # must be a main account in hardware wallet
-TO_PUBLIC_KEY = ""  # must be the above's child subaccount
+HARDWARE_PATH = os.getenv("HARDWARE_PATH")  # e.g. "usb://ledger?key=1"
+FROM_HARDWARE_PUB_KEY = os.getenv("FROM_HARDWARE_PUB_KEY")  # must be a main account in hardware wallet
+TO_PUBLIC_KEY = os.getenv("TO_PUBLIC_KEY")  # must be the above's child subaccount
 
 
 def main():

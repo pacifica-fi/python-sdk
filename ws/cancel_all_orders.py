@@ -1,15 +1,20 @@
 import asyncio
 import json
+import os
 import time
 import uuid
 
 import websockets
+from dotenv import load_dotenv
 from solders.keypair import Keypair
 
 from common.constants import WS_URL
 from common.utils import sign_message
 
-PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
+# Load environment variables
+load_dotenv()
+
+PRIVATE_KEY = os.getenv("PRIVATE_KEY")
 
 
 async def exec_main():

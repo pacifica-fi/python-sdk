@@ -4,21 +4,25 @@ Please refer to https://docs.pacifica.fi/api-documentation/api/rate-limits/api-c
 for the use of API Config Keys.
 """
 
+import os
 import time
 import json
 
 import requests
+from dotenv import load_dotenv
 from solders.keypair import Keypair
 
 from common.constants import REST_URL
 from common.utils import sign_message
 
+# Load environment variables
+load_dotenv()
 
 CREATE_ENDPOINT = f"{REST_URL}/account/api_keys/create"
 REVOKE_ENDPOINT = f"{REST_URL}/account/api_keys/revoke"
 LIST_ENDPOINT = f"{REST_URL}/account/api_keys"
 
-PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
+PRIVATE_KEY = os.getenv("PRIVATE_KEY")
 
 
 def create_api_config_key(keypair: Keypair):

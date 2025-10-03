@@ -1,16 +1,20 @@
+import os
 import time
 import uuid
 
 import requests
+from dotenv import load_dotenv
 from solders.keypair import Keypair
 
 from common.constants import REST_URL
 from common.utils import sign_message
 
+# Load environment variables
+load_dotenv()
 
 # Assume a BTC long position has already been opened
 API_URL = f"{REST_URL}/positions/tpsl"
-PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
+PRIVATE_KEY = os.getenv("PRIVATE_KEY")
 
 
 def main():

@@ -1,4 +1,6 @@
+import os
 from borsh_construct import CStruct, U64
+from dotenv import load_dotenv
 from solders.keypair import Keypair
 from solders.instruction import Instruction, AccountMeta
 from solders.pubkey import Pubkey
@@ -7,7 +9,10 @@ from solana.transaction import Transaction
 from spl.token.constants import TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID
 import hashlib
 
-PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
+# Load environment variables
+load_dotenv()
+
+PRIVATE_KEY = os.getenv("PRIVATE_KEY")
 DEPOSIT_AMOUNT = 4200.69  # minimum amount is 10
 
 PROGRAM_ID = Pubkey.from_string("PCFA5iYgmqK6MqPhWNKg7Yv7auX7VZ4Cx7T1eJyrAMH")

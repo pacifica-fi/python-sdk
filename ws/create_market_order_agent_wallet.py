@@ -1,16 +1,21 @@
 import asyncio
 import json
+import os
 import time
 import uuid
 
 import websockets
+from dotenv import load_dotenv
 from solders.keypair import Keypair
 
 from common.constants import WS_URL
 from common.utils import sign_message
 
-PRIVATE_KEY = ""
-API_PRIVATE_KEY = ""  # must be the above public key's registered agent wallet
+# Load environment variables
+load_dotenv()
+
+PRIVATE_KEY = os.getenv("PRIVATE_KEY")
+API_PRIVATE_KEY = os.getenv("API_PRIVATE_KEY")  # must be the above public key's registered agent wallet
 
 
 async def exec_main():

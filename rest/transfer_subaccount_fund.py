@@ -1,15 +1,19 @@
+import os
 import time
 
 import requests
+from dotenv import load_dotenv
 from solders.keypair import Keypair
 
 from common.constants import REST_URL
 from common.utils import sign_message
 
+# Load environment variables
+load_dotenv()
 
 API_URL = f"{REST_URL}/account/subaccount/transfer"
-FROM_PRIVATE_KEY = ""  # must be a main account or a subaccount
-TO_PUBLIC_KEY = ""  # must be the above's child subaccount or parent main account
+FROM_PRIVATE_KEY = os.getenv("FROM_PRIVATE_KEY")  # must be a main account or a subaccount
+TO_PUBLIC_KEY = os.getenv("TO_PUBLIC_KEY")  # must be the above's child subaccount or parent main account
 
 
 def main():
