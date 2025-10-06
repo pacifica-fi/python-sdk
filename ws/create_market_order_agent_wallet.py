@@ -9,14 +9,11 @@ from solders.keypair import Keypair
 from common.constants import WS_URL
 from common.utils import sign_message
 
-PRIVATE_KEY = ""
+PUBLIC_KEY = ""
 API_PRIVATE_KEY = ""  # must be the above public key's registered agent wallet
 
 
 async def exec_main():
-    # Generate account based on private key
-    keypair = Keypair.from_base58_string(PRIVATE_KEY)
-    public_key = str(keypair.pubkey())
     api_keypair = Keypair.from_base58_string(API_PRIVATE_KEY)
     agent_key = str(api_keypair.pubkey())
 
@@ -44,7 +41,7 @@ async def exec_main():
 
     # Construct the request reusing the payload and constructing common request fields
     request_header = {
-        "account": public_key,
+        "account": PUBLIC_KEY,
         "agent_wallet": agent_key,
         "signature": signature,
         "timestamp": signature_header["timestamp"],
@@ -74,7 +71,7 @@ async def exec_main():
 
         # Print details for debugging
         print("\nDebug Info:")
-        print(f"Address: {public_key}")
+        print(f"Address: {PUBLIC_KEY}")
         print(f"Message: {message}")
         print(f"Signature: {signature}")
         print(f"WebSocket Message: {ws_message}")
