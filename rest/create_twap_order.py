@@ -34,7 +34,7 @@ def main():
         "amount": "1",
         "side": "bid",
         "slippage_percent": "0.5",
-        "duration_in_seconds": 30*(planned_sub_order_count-1),
+        "duration_in_seconds": 30 * (planned_sub_order_count - 1),
         "client_order_id": str(uuid.uuid4()),
     }
 
