@@ -282,7 +282,7 @@ def remove_ip_from_whitelist(
 
     # Construct the signature payload.
     signature_payload = {
-        "api_agent_key": agent_wallet_address,
+        "agent_wallet": agent_wallet_address,
         "ip_address": ip_address,
     }
 
@@ -324,7 +324,7 @@ def toggle_ip_whitelist(keypair: Keypair, agent_wallet_address: str, enabled: bo
 
     # Construct the signature payload.
     signature_payload = {
-        "api_agent_key": agent_wallet_address,
+        "agent_wallet": agent_wallet_address,
         "enabled": enabled,
     }
 
