@@ -18,7 +18,6 @@ IP_ADD_ENDPOINT = f"{REST_URL}/agent/ip_whitelist/add"
 IP_REMOVE_ENDPOINT = f"{REST_URL}/agent/ip_whitelist/remove"
 IP_TOGGLE_ENDPOINT = f"{REST_URL}/agent/ip_whitelist/toggle"
 
-
 def bind_agent_wallet(keypair: Keypair, agent_wallet_address: str):
     """Bind an agent wallet to your account."""
     public_key = str(keypair.pubkey())
@@ -62,7 +61,6 @@ def bind_agent_wallet(keypair: Keypair, agent_wallet_address: str):
 
     return response
 
-
 def list_agent_wallets(keypair: Keypair):
     """List all bound agent wallets."""
     public_key = str(keypair.pubkey())
@@ -100,7 +98,6 @@ def list_agent_wallets(keypair: Keypair):
     response = requests.post(LIST_ENDPOINT, json=request, headers=headers)
 
     return response
-
 
 def revoke_agent_wallet(keypair: Keypair, agent_wallet_address: str):
     """Revoke a specific agent wallet."""
@@ -142,7 +139,6 @@ def revoke_agent_wallet(keypair: Keypair, agent_wallet_address: str):
 
     return response
 
-
 def revoke_all_agent_wallets(keypair: Keypair):
     """Revoke all agent wallets."""
     public_key = str(keypair.pubkey())
@@ -181,7 +177,6 @@ def revoke_all_agent_wallets(keypair: Keypair):
 
     return response
 
-
 def list_ip_whitelist(keypair: Keypair, agent_wallet_address: str):
     """List IP addresses in the whitelist for an agent wallet."""
     public_key = str(keypair.pubkey())
@@ -197,7 +192,7 @@ def list_ip_whitelist(keypair: Keypair, agent_wallet_address: str):
 
     # Construct the signature payload.
     signature_payload = {
-        "api_agent_key": agent_wallet_address,
+        "agent_wallet": agent_wallet_address,
     }
 
     # Use the helper function to sign the message.
@@ -221,7 +216,6 @@ def list_ip_whitelist(keypair: Keypair, agent_wallet_address: str):
     response = requests.post(IP_LIST_ENDPOINT, json=request, headers=headers)
 
     return response
-
 
 def add_ip_to_whitelist(keypair: Keypair, agent_wallet_address: str, ip_address: str):
     """Add an IP address to the whitelist."""
@@ -264,10 +258,7 @@ def add_ip_to_whitelist(keypair: Keypair, agent_wallet_address: str, ip_address:
 
     return response
 
-
-def remove_ip_from_whitelist(
-    keypair: Keypair, agent_wallet_address: str, ip_address: str
-):
+def remove_ip_from_whitelist(keypair: Keypair, agent_wallet_address: str, ip_address: str):
     """Remove an IP address from the whitelist."""
     public_key = str(keypair.pubkey())
 
@@ -282,7 +273,7 @@ def remove_ip_from_whitelist(
 
     # Construct the signature payload.
     signature_payload = {
-        "api_agent_key": agent_wallet_address,
+        "agent_wallet": agent_wallet_address,
         "ip_address": ip_address,
     }
 
@@ -308,7 +299,6 @@ def remove_ip_from_whitelist(
 
     return response
 
-
 def toggle_ip_whitelist(keypair: Keypair, agent_wallet_address: str, enabled: bool):
     """Enable or disable IP whitelist enforcement."""
     public_key = str(keypair.pubkey())
@@ -324,7 +314,7 @@ def toggle_ip_whitelist(keypair: Keypair, agent_wallet_address: str, enabled: bo
 
     # Construct the signature payload.
     signature_payload = {
-        "api_agent_key": agent_wallet_address,
+        "agent_wallet": agent_wallet_address,
         "enabled": enabled,
     }
 
