@@ -28,7 +28,7 @@ def main():
     # Construct the signature payload
     signature_payload = {
         "manager": public_key,  # or other valid account, cannot be a sublake
-        "nickname": "Moarine Lake",  # optional field
+        "nickname": "Moraine Lake",  # optional field
     }
 
     # Use the helper function to sign the message
