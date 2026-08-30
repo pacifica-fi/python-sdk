@@ -10,15 +10,16 @@ import json
 import requests
 from solders.keypair import Keypair
 
-from common.constants import REST_URL
+from common.constants import REQUEST_TIMEOUT, REST_URL
 from common.utils import sign_message
+from common.env import load_private_key
 
 
 CREATE_ENDPOINT = f"{REST_URL}/account/api_keys/create"
 REVOKE_ENDPOINT = f"{REST_URL}/account/api_keys/revoke"
 LIST_ENDPOINT = f"{REST_URL}/account/api_keys"
 
-PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
+PRIVATE_KEY = load_private_key("PACIFICA_PRIVATE_KEY")
 
 
 def create_api_config_key(keypair: Keypair):
@@ -57,7 +58,7 @@ def create_api_config_key(keypair: Keypair):
         **request_header,
         **signature_payload,
     }
-    response = requests.post(CREATE_ENDPOINT, json=request, headers=headers)
+    response = requests.post(CREATE_ENDPOINT, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return response
 
@@ -100,7 +101,7 @@ def revoke_api_config_key(keypair: Keypair, api_key: str):
         **request_header,
         **signature_payload,
     }
-    response = requests.post(REVOKE_ENDPOINT, json=request, headers=headers)
+    response = requests.post(REVOKE_ENDPOINT, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return response
 
@@ -141,7 +142,7 @@ def list_api_config_keys(keypair: Keypair):
         **request_header,
         **signature_payload,
     }
-    response = requests.post(LIST_ENDPOINT, json=request, headers=headers)
+    response = requests.post(LIST_ENDPOINT, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return response
 

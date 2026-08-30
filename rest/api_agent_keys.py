@@ -10,13 +10,14 @@ import uuid
 import requests
 from solders.keypair import Keypair
 
-from common.constants import REST_URL
+from common.constants import REQUEST_TIMEOUT, REST_URL
 from common.utils import sign_message
+from common.env import load_private_key
 
 
 BIND_AGENT_WALLET_API_URL = f"{REST_URL}/agent/bind"
 MARKET_ORDER_API_URL = f"{REST_URL}/orders/create_market"
-PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
+PRIVATE_KEY = load_private_key("PACIFICA_PRIVATE_KEY")
 
 
 def main():
@@ -65,7 +66,7 @@ def main():
         **signature_payload,
     }
 
-    response = requests.post(BIND_AGENT_WALLET_API_URL, json=request, headers=headers)
+    response = requests.post(BIND_AGENT_WALLET_API_URL, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
     print(f"Status Code: {response.status_code}")
     print(f"Response: {response.text}")
     print(f"Request: {request}")
@@ -123,7 +124,7 @@ def main():
         **signature_payload,
     }
 
-    response = requests.post(MARKET_ORDER_API_URL, json=request, headers=headers)
+    response = requests.post(MARKET_ORDER_API_URL, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
     print(f"Status Code: {response.status_code}")
     print(f"Response: {response.text}")
     print(f"Request: {request}")

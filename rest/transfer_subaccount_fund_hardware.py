@@ -4,14 +4,15 @@ import json
 import requests
 from solders.keypair import Keypair
 
-from common.constants import REST_URL
+from common.constants import REQUEST_TIMEOUT, REST_URL
 from common.utils import sign_with_hardware_wallet
+from common.env import load_public_key, load_wallet_path
 
 
 API_URL = f"{REST_URL}/account/subaccount/transfer"
-HARDWARE_PATH = ""  # e.g. "usb://ledger?key=1"
-FROM_HARDWARE_PUB_KEY = ""  # must be a main account in hardware wallet
-TO_PUBLIC_KEY = ""  # must be the above's child subaccount
+HARDWARE_PATH = load_wallet_path("PACIFICA_HARDWARE_PATH")
+FROM_HARDWARE_PUB_KEY = load_public_key("PACIFICA_FROM_HARDWARE_PUB_KEY")
+TO_PUBLIC_KEY = load_public_key("PACIFICA_TO_PUBLIC_KEY")
 
 
 def main():
@@ -54,7 +55,7 @@ def main():
         **signature_payload,
     }
 
-    response = requests.post(API_URL, json=request, headers=headers)
+    response = requests.post(API_URL, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
     print(f"Status Code: {response.status_code}")
     print(f"Response: {response.text}")
     print(f"Request: {request}")

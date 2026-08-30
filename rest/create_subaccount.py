@@ -57,12 +57,13 @@ import time
 import requests
 from solders.keypair import Keypair
 
-from common.constants import REST_URL
+from common.constants import REQUEST_TIMEOUT, REST_URL
 from common.utils import sign_message
+from common.env import load_private_key
 
 API_URL = f"{REST_URL}/account/subaccount/create"
-MAIN_PRIVATE_KEY = ""
-SUB_PRIVATE_KEY = ""
+MAIN_PRIVATE_KEY = load_private_key("PACIFICA_MAIN_PRIVATE_KEY")
+SUB_PRIVATE_KEY = load_private_key("PACIFICA_SUB_PRIVATE_KEY")
 
 
 def main():
@@ -119,7 +120,7 @@ def main():
     # Send the request
     headers = {"Content-Type": "application/json"}
 
-    response = requests.post(API_URL, json=request, headers=headers)
+    response = requests.post(API_URL, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
     print(f"Status Code: {response.status_code}")
     print(f"Response: {response.text}")
     print(f"Request: {request}")
