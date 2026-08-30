@@ -6,9 +6,19 @@ from solana.rpc.api import Client
 from solana.transaction import Transaction
 from spl.token.constants import TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID
 import hashlib
+from common.env import load_private_key
 
-PRIVATE_KEY = ""  # e.g. "2Z2Wn4kN5ZNhZzuFTQSyTiN4ixX8U6ew5wPDJbHngZaC3zF3uWNj4dQ63cnGfXpw1cESZPCqvoZE7VURyuj9kf8b"
-DEPOSIT_AMOUNT = 4200.69  # minimum amount is 10
+from common.env import load_private_key
+from common.validate import check_amount, to_base_units
+
+PRIVATE_KEY = load_private_key("PACIFICA_PRIVATE_KEY")
+# The amount is a *string*, validated into a `Decimal` below. It used to be the float
+# literal `4200.69`, which the instruction encoder then scaled with
+# `int(round(amount * 1_000_000))` - and `4200.69` is not representable in binary
+# floating point, so the base-unit count depended on how that product happened to round.
+# For an irreversible on-chain transfer, the number of base units must follow from the
+# number the user wrote, not from the rounding of an intermediate double.
+DEPOSIT_AMOUNT = "4200.69"  # minimum amount is 10
 
 PROGRAM_ID = Pubkey.from_string("PCFA5iYgmqK6MqPhWNKg7Yv7auX7VZ4Cx7T1eJyrAMH")
 CENTRAL_STATE = Pubkey.from_string("9Gdmhq4Gv1LnNMp7aiS1HSVd7pNnXNMsbuXALCQRmGjY")
@@ -25,10 +35,12 @@ def get_discriminator(name: str) -> bytes:
     return hashlib.sha256(f"global:{name}".encode()).digest()[:8]
 
 
-def build_deposit_instruction_data(amount: float) -> bytes:
-    borsh_args = deposit_layout.build(
-        {"amount": int(round(amount * 1_000_000))}
-    )  # 6 decimals
+def build_deposit_instruction_data(amount: str) -> bytes:
+    # `check_amount` enforces the documented 10 USDC floor and rejects anything with
+    # more than six decimal places; `to_base_units` then does the scaling in exact
+    # decimal arithmetic and refuses any value that would not land on a whole base unit.
+    validated = check_amount(amount, name="DEPOSIT_AMOUNT", minimum="10")
+    borsh_args = deposit_layout.build({"amount": to_base_units(validated)})  # 6 decimals
     return get_discriminator("deposit") + borsh_args
 
 

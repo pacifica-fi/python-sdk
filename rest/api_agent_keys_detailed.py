@@ -3,7 +3,7 @@ import uuid
 import requests
 from solders.keypair import Keypair
 
-from common.constants import REST_URL
+from common.constants import REQUEST_TIMEOUT, REST_URL
 from common.utils import sign_message
 
 # Agent Wallet Management Endpoints
@@ -58,7 +58,7 @@ def bind_agent_wallet(keypair: Keypair, agent_wallet_address: str):
         **request_header,
         **signature_payload,
     }
-    response = requests.post(BIND_ENDPOINT, json=request, headers=headers)
+    response = requests.post(BIND_ENDPOINT, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return response
 
@@ -97,7 +97,7 @@ def list_agent_wallets(keypair: Keypair):
         **request_header,
         **signature_payload,
     }
-    response = requests.post(LIST_ENDPOINT, json=request, headers=headers)
+    response = requests.post(LIST_ENDPOINT, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return response
 
@@ -138,7 +138,7 @@ def revoke_agent_wallet(keypair: Keypair, agent_wallet_address: str):
         **request_header,
         **signature_payload,
     }
-    response = requests.post(REVOKE_ENDPOINT, json=request, headers=headers)
+    response = requests.post(REVOKE_ENDPOINT, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return response
 
@@ -177,7 +177,7 @@ def revoke_all_agent_wallets(keypair: Keypair):
         **request_header,
         **signature_payload,
     }
-    response = requests.post(REVOKE_ALL_ENDPOINT, json=request, headers=headers)
+    response = requests.post(REVOKE_ALL_ENDPOINT, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return response
 
@@ -218,7 +218,7 @@ def list_ip_whitelist(keypair: Keypair, agent_wallet_address: str):
         **request_header,
         **signature_payload,
     }
-    response = requests.post(IP_LIST_ENDPOINT, json=request, headers=headers)
+    response = requests.post(IP_LIST_ENDPOINT, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return response
 
@@ -260,7 +260,7 @@ def add_ip_to_whitelist(keypair: Keypair, agent_wallet_address: str, ip_address:
         **request_header,
         **signature_payload,
     }
-    response = requests.post(IP_ADD_ENDPOINT, json=request, headers=headers)
+    response = requests.post(IP_ADD_ENDPOINT, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return response
 
@@ -304,7 +304,7 @@ def remove_ip_from_whitelist(
         **request_header,
         **signature_payload,
     }
-    response = requests.post(IP_REMOVE_ENDPOINT, json=request, headers=headers)
+    response = requests.post(IP_REMOVE_ENDPOINT, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return response
 
@@ -346,6 +346,6 @@ def toggle_ip_whitelist(keypair: Keypair, agent_wallet_address: str, enabled: bo
         **request_header,
         **signature_payload,
     }
-    response = requests.post(IP_TOGGLE_ENDPOINT, json=request, headers=headers)
+    response = requests.post(IP_TOGGLE_ENDPOINT, json=request, headers=headers, timeout=REQUEST_TIMEOUT)
 
     return response

@@ -4,12 +4,13 @@ import uuid
 import requests
 from solders.keypair import Keypair
 
-from common.constants import REST_URL
+from common.constants import REQUEST_TIMEOUT, REST_URL
 from common.utils import sign_message
+from common.env import load_private_key
 
 
 API_URL = f"{REST_URL}/orders/batch"
-PRIVATE_KEY = ""
+PRIVATE_KEY = load_private_key("PACIFICA_PRIVATE_KEY")
 
 
 def main():
@@ -100,11 +101,14 @@ def main():
     # Send the request
     headers = {"Content-Type": "application/json"}
     request_payload = {"actions": request_list}
-    response = requests.post(API_URL, json=request_payload, headers=headers)
+    response = requests.post(API_URL, json=request_payload, headers=headers, timeout=REQUEST_TIMEOUT)
 
     print(f"Status Code: {response.status_code}")
     print(f"Response: {response.text}")
-    print(f"Requests: {requests}")
+    # `requests` here is the HTTP library module, not the payload - the original line
+    # printed `<module 'requests' from '...'>` and its filesystem path instead of the
+    # batch that was sent, which is the one thing this debug line existed to show.
+    print(f"Requests: {request_payload}")
 
 
 if __name__ == "__main__":
